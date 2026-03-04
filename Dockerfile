@@ -20,8 +20,12 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy application code
 COPY . .
 
+# Copy and setup entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Expose port
 EXPOSE 8000
 
 # Run the application
-CMD sh -c "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000}"
+ENTRYPOINT ["/entrypoint.sh"]
